@@ -1,5 +1,7 @@
 #include <iostream>
 
+// This program will allow you to test the endianness of your computer
+
 int main()
 {
     int val = 1;

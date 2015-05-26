@@ -2,6 +2,9 @@
 #include <cstdint>
 #include <iomanip>
 
+// This program shows how your compiler may add padding into your own structs to make alignment easier
+// Some of the padding comments may not be correct, depending on what your compiler does
+
 // This program requires c++11
 // Use --std=c++11 if you have c++11 compatible compiler
 
@@ -39,19 +42,4 @@ int main()
     std::cout << "Size of TenBytes: " << sizeof(TenBytes) << ".\n";
     std::cout << "Size of TenBytesReordered: " << sizeof(TenBytesReordered) << ".\n";
     std::cout << "Size of LongDoubleAndChar: " << sizeof(LongDoubleAndChar) << ".\n\n";
-    
-    int32_t number = 1234;
-    
-    // A little hack to move by one byte
-    int32_t *warpedAddress = (int32_t *)(1 + (char *) &number);
-    std::cout << "Address of number: " << &number << ".\n";
-    std::cout << "Address of warped: " << warpedAddress << ".\n";
-    
-    std::cout << "Warped value: " << *warpedAddress << ".\n\n";
-    
-    TenBytes tenBytes;
-    uintptr_t tenBytesAddr = (uintptr_t) (void *) &tenBytes;
-    std::cout << "Address of tenBytes: " << &tenBytes << ".\n";
-    std::cout << "Values of addrval: " << std::hex <<  tenBytesAddr << ".\n";
-    std::cout << "Moddable by largest member size (4): " << ((tenBytesAddr % 4 == 0) ? "yes" : "no") << ".\n";
 }

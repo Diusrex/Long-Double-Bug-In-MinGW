@@ -2,15 +2,23 @@
 #include <iomanip>
 #include <float.h>
 
-// Change these to determine which formats are outputted
+// This program will allow you to see a long double number is stored in your computer, as well as what changes when it is wrongly interpreted
+
+// The code for this program is fairly implementation specific.
+// The biggest part is how I assume that there are two bytes of padding at the end of a long double which depends on the compiler that you use. It should be correct for g++.
+
+long double value = 123.456789L;
+
+// Change these to choose which formats are outputted
 const bool ShowInHex = true;
 const bool ShowInBinary = true;
 
-// Would use int8_t, but it is in c++11, while this allows more versions
+// Would use int8_t, but it is in c++11
 typedef unsigned char BYTE;
 
 bool IsBigEndian();
 
+// The end is exclusive
 void PrintOutAsStored(BYTE *bytes, int end, int start = 0, int inc = 1);
 
 void PrintOutAsInterpreted(BYTE * bytes, int size);
@@ -20,17 +28,14 @@ void PrintOutByteInBinary(BYTE byte);
 
 int main()
 {
-    std::cout << "Size of long double: " << sizeof(long double) << ".\n";
-    std::cout << "Size of double: " << sizeof(double) << ".\n\n";
+    std::cout << "Size of long double: " << sizeof(long double) << "\n";
+    std::cout << "Size of double: " << sizeof(double) << "\n\n";
     
-    long double val;
-    val = 123.456789L;
+    BYTE * bytes = (BYTE *) &value;
     
-    BYTE * bytes = (BYTE *) &val;
-    
-    std::cout << "When printed as long double: " << val << '\n';
-    std::cout << "When interpreted as double: " << *(double *) &val << '\n';
-    std::cout << "When casted to double (one fix): " << (double ) val << '\n';
+    std::cout << "When printed as long double: " << value << '\n';
+    std::cout << "When interpreted as double: " << *(double *) &value << '\n';
+    std::cout << "When casted to double: " << (double) value << '\n';
     
     std::cout << "Stored as:\n";
     PrintOutAsStored(bytes, sizeof(long double));
@@ -43,7 +48,7 @@ int main()
     PrintOutAsInterpreted(bytes, sizeof(double));
     
     std::cout << "Should be interpreted as:\n";
-    double valAsDouble = (double) val;
+    double valAsDouble = (double) value;
     bytes = (BYTE *) &valAsDouble;
     
     std::cout << "Double output: " << valAsDouble << '\n';
