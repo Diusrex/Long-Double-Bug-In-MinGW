@@ -1,4 +1,4 @@
-# Long-Double-Issue-In-MinGW
+# Long Double Output Bug In MinGW
 
 This repository is for my [post on a bug](http://www.diusrex.com/2015/05/long-double-bug-in-mingw/) I found in g++ 4.8.1 revision 4 distributed by MinGW-get. 
 
