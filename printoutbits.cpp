@@ -34,24 +34,23 @@ int main()
     BYTE * bytes = (BYTE *) &value;
     
     std::cout << "When printed as long double: " << value << '\n';
-    std::cout << "When interpreted as double: " << *(double *) &value << '\n';
+    std::cout << "When interpreting bits as double: " << *(double *) &value << ". This is NOT a cast\n";
     std::cout << "When casted to double: " << (double) value << '\n';
     
     std::cout << "Stored as:\n";
     PrintOutAsStored(bytes, sizeof(long double));
     
     std::cout << "Properly interpreted as:\n";
-    std::cout << "Note, assumes your computer uses 2 extra bytes for padding\n";
+    std::cout << "Note, assumes your computer uses 2 extra bytes for padding (or stores in 96 bits)\n";
     PrintOutAsInterpreted(bytes, sizeof(long double) - 2);
     
-    std::cout << "Interpreted as:\n";
+    std::cout << "Interpreted incorrectly as:\n";
     PrintOutAsInterpreted(bytes, sizeof(double));
     
     std::cout << "Should be interpreted as:\n";
     double valAsDouble = (double) value;
     bytes = (BYTE *) &valAsDouble;
     
-    std::cout << "Double output: " << valAsDouble << '\n';
     PrintOutAsInterpreted(bytes, sizeof(double));
 }
 
